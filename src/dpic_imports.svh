@@ -50,44 +50,44 @@ import "DPI-C" function automatic void softfloat_raiseFlags( unsigned byte );
 /*----------------------------------------------------------------------------
 | Integer-to-floating-point conversion routines.
 *----------------------------------------------------------------------------*/
-import "DPI-C" function automatic bfloat16_t ui32_to_bf16( uint32_t );
-import "DPI-C" function automatic float16_t ui32_to_f16( uint32_t );
-import "DPI-C" function automatic float32_t ui32_to_f32( uint32_t );
-import "DPI-C" function automatic float64_t ui32_to_f64( uint32_t );
+import "DPI-C" function automatic bfloat16_t ui32_to_bf16( unsigned int );
+import "DPI-C" function automatic float16_t ui32_to_f16( unsigned int );
+import "DPI-C" function automatic float32_t ui32_to_f32( unsigned int );
+import "DPI-C" function automatic float64_t ui32_to_f64( unsigned int );
 `ifdef SOFTFLOAT_FAST_INT64
-    import "DPI-C" function automatic extFloat80_t ui32_to_extF80( uint32_t );
-    import "DPI-C" function automatic float128_t ui32_to_f128( uint32_t );
+    import "DPI-C" function automatic extFloat80_t ui32_to_extF80( unsigned int );
+    import "DPI-C" function automatic float128_t ui32_to_f128( unsigned int );
 `endif
-import "DPI-C" function automatic void ui32_to_extF80M( uint32_t, output extFloat80_t );
-import "DPI-C" function automatic void ui32_to_f128M( uint32_t, output float128_t );
-import "DPI-C" function automatic float16_t ui64_to_f16( uint64_t );
-import "DPI-C" function automatic float32_t ui64_to_f32( uint64_t );
-import "DPI-C" function automatic float64_t ui64_to_f64( uint64_t );
+import "DPI-C" function automatic void ui32_to_extF80M( unsigned int, output extFloat80_t );
+import "DPI-C" function automatic void ui32_to_f128M( unsigned int, output float128_t );
+import "DPI-C" function automatic float16_t ui64_to_f16( unsigned longint );
+import "DPI-C" function automatic float32_t ui64_to_f32( unsigned longint );
+import "DPI-C" function automatic float64_t ui64_to_f64( unsigned longint );
 `ifdef SOFTFLOAT_FAST_INT64
-    import "DPI-C" function automatic extFloat80_t ui64_to_extF80( uint64_t );
-    import "DPI-C" function automatic float128_t ui64_to_f128( uint64_t );
+    import "DPI-C" function automatic extFloat80_t ui64_to_extF80( unsigned longint );
+    import "DPI-C" function automatic float128_t ui64_to_f128( unsigned longint );
 `endif
-import "DPI-C" function automatic void ui64_to_extF80M( uint64_t, output extFloat80_t );
-import "DPI-C" function automatic void ui64_to_f128M( uint64_t, output float128_t );
-import "DPI-C" function automatic bfloat16_t i32_to_bf16( int32_t );
-import "DPI-C" function automatic float16_t i32_to_f16( int32_t );
-import "DPI-C" function automatic float32_t i32_to_f32( int32_t );
-import "DPI-C" function automatic float64_t i32_to_f64( int32_t );
+import "DPI-C" function automatic void ui64_to_extF80M( unsigned longint, output extFloat80_t );
+import "DPI-C" function automatic void ui64_to_f128M( unsigned longint, output float128_t );
+import "DPI-C" function automatic bfloat16_t i32_to_bf16( signed int );
+import "DPI-C" function automatic float16_t i32_to_f16( signed int );
+import "DPI-C" function automatic float32_t i32_to_f32( signed int );
+import "DPI-C" function automatic float64_t i32_to_f64( signed int );
 `ifdef SOFTFLOAT_FAST_INT64
-    import "DPI-C" function automatic extFloat80_t i32_to_extF80( int32_t );
-    import "DPI-C" function automatic float128_t i32_to_f128( int32_t );
+    import "DPI-C" function automatic extFloat80_t i32_to_extF80( signed int );
+    import "DPI-C" function automatic float128_t i32_to_f128( signed int );
 `endif
-import "DPI-C" function automatic void i32_to_extF80M( int32_t, output extFloat80_t );
-import "DPI-C" function automatic void i32_to_f128M( int32_t, output float128_t );
-import "DPI-C" function automatic float16_t i64_to_f16( int64_t );
-import "DPI-C" function automatic float32_t i64_to_f32( int64_t );
-import "DPI-C" function automatic float64_t i64_to_f64( int64_t );
+import "DPI-C" function automatic void i32_to_extF80M( signed int, output extFloat80_t );
+import "DPI-C" function automatic void i32_to_f128M( signed int, output float128_t );
+import "DPI-C" function automatic float16_t i64_to_f16( signed longint );
+import "DPI-C" function automatic float32_t i64_to_f32( signed longint );
+import "DPI-C" function automatic float64_t i64_to_f64( signed longint );
 `ifdef SOFTFLOAT_FAST_INT64
-    import "DPI-C" function automatic extFloat80_t i64_to_extF80( int64_t );
-    import "DPI-C" function automatic float128_t i64_to_f128( int64_t );
+    import "DPI-C" function automatic extFloat80_t i64_to_extF80( signed longint );
+    import "DPI-C" function automatic float128_t i64_to_f128( signed longint );
 `endif
-import "DPI-C" function automatic void i64_to_extF80M( int64_t, output extFloat80_t );
-import "DPI-C" function automatic void i64_to_f128M( int64_t, output float128_t );
+import "DPI-C" function automatic void i64_to_extF80M( signed longint, output extFloat80_t );
+import "DPI-C" function automatic void i64_to_f128M( signed longint, output float128_t );
 
 /*----------------------------------------------------------------------------
 | 16-bit (half-precision) floating-point operations.
