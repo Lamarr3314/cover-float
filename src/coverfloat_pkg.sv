@@ -33,16 +33,16 @@ package coverfloat_pkg;
 
     // format encodings
     //  {(int = 1, float = 0), (unsigned int), others => format encoding}
-    const logic [7:0] FMT_HALF   = 8'b 0_0_000000 
-    const logic [7:0] FMT_SINGLE = 8'b 0_0_000001
-    const logic [7:0] FMT_DOUBLE = 8'b 0_0_000010
-    const logic [7:0] FMT_QUAD   = 8'b 0_0_000011
-    const logic [7:0] FMT_BF16   = 8'b 0_0_000100
+    const logic [7:0] FMT_HALF   = 8'b 0_0_000000;
+    const logic [7:0] FMT_SINGLE = 8'b 0_0_000001;
+    const logic [7:0] FMT_DOUBLE = 8'b 0_0_000010;
+    const logic [7:0] FMT_QUAD   = 8'b 0_0_000011;
+    const logic [7:0] FMT_BF16   = 8'b 0_0_000100;
 
-    const logic [7:0] FMT_INT    = 8'b 1_0_000001
-    const logic [7:0] FMT_UINT   = 8'b 1_1_000001
-    const logic [7:0] FMT_LONG   = 8'b 1_0_000010
-    const logic [7:0] FMT_ULONG  = 8'b 1_1_000010
+    const logic [7:0] FMT_INT    = 8'b 1_0_000001;
+    const logic [7:0] FMT_UINT   = 8'b 1_1_000001;
+    const logic [7:0] FMT_LONG   = 8'b 1_0_000010;
+    const logic [7:0] FMT_ULONG  = 8'b 1_1_000010;
 
     // float types
     typedef struct {
@@ -78,11 +78,11 @@ package coverfloat_pkg;
     
 
     import "DPI-C" function automatic int  softFloat_getFlags ();
-    import "DPI-C" function automatic void softFloat_clearFlags (unsigned byte);
+    import "DPI-C" function automatic void softFloat_clearFlags (input unsigned byte);
     import "DPI-C" function automatic void softFloat_setRoundingMode (); 
-    import "DPI-C" function automatic void softfloat_getIntermResults (output intmermResult_t interm);
+    import "DPI-C" function automatic void softfloat_getIntermResults (output intermResult_t interm);
 
-    `include dpic_imports.svh
+    // `include "dpic_imports.svh"
 
 
 endpackage

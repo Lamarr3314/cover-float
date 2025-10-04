@@ -2,7 +2,7 @@
 #define COVERFLOAT_H_INCLUDED
 
 #include <stdint.h>
-#include "softfloat.h"
+#include "../../riscv-isa-sim/softfloat/softfloat.h" // TODO: yuck fix paths
 
 /*
 typedef enum {
@@ -100,6 +100,6 @@ uint_fast8_t softFloat_getFlags ();
 
 void softFloat_setRoundingMode ( uint_fast8_t );
 
-void softfloat_getIntermResults ( intermResults_t * );
+void softfloat_getIntermResults ( intermResult_t * );
 
 #endif

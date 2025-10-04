@@ -1,0 +1,36 @@
+m255
+K4
+z2
+!s11f vlog 2023.4_4 2024.10, Oct 11 2024
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/chickson/cover-float/examples/dpitest
+Xcoverfloat_pkg
+2../../src/coverfloat_pkg.sv
+DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
+!s110 1759620081
+!i10b 1
+!s100 jJbQ00;bX5?5R<3E@B=bo1
+IS2cAZE>PCNEJ[YkKKE;U`0
+S1
+R0
+w1759620067
+8../../src/coverfloat_pkg.sv
+F../../src/coverfloat_pkg.sv
+!i122 0
+L0 1 0
+VS2cAZE>PCNEJ[YkKKE;U`0
+OL;L;2023.4_4;77
+r1
+!s85 0
+31
+!s108 1759620081.000000
+!s107 ../../src/coverfloat_pkg.sv|
+!s90 -sv|-work|work|../../src/coverfloat_pkg.sv|../../src/coverfloat.c|
+!i113 0
+o-sv -work work -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+tCvgOpt 0

@@ -13,7 +13,7 @@ void softFloat_setRoundingMode (uint_fast8_t rm) {
     softfloat_roundingMode = rm;
 }
 
-void softfloat_getIntermResults (intermResults_t * result) {
+void softfloat_getIntermResults (intermResult_t * result) {
 
     result->sign     = softfloat_intermediateResult->sign;
     result->exp      = softfloat_intermediateResult->exp;
