@@ -45,65 +45,65 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /*----------------------------------------------------------------------------
 | Routine to raise any or all of the software floating-point exception flags.
 *----------------------------------------------------------------------------*/
-import "DPI-C" function automatic void softfloat_raiseFlags( input unsigned byte );
+import "DPI-C" function automatic void softfloat_raiseFlags( input byte unsigned );
 
 /*----------------------------------------------------------------------------
 | Integer-to-floating-point conversion routines.
 *----------------------------------------------------------------------------*/
-import "DPI-C" function automatic bfloat16_t ui32_to_bf16( input unsigned int );
-import "DPI-C" function automatic float16_t ui32_to_f16( input unsigned int );
-import "DPI-C" function automatic float32_t ui32_to_f32( input unsigned int );
-import "DPI-C" function automatic float64_t ui32_to_f64( input unsigned int );
+import "DPI-C" function automatic bfloat16_t ui32_to_bf16( input int unsigned );
+import "DPI-C" function automatic float16_t ui32_to_f16( input int unsigned );
+import "DPI-C" function automatic float32_t ui32_to_f32( input int unsigned );
+import "DPI-C" function automatic float64_t ui32_to_f64( input int unsigned );
 `ifdef SOFTFLOAT_FAST_INT64
-    import "DPI-C" function automatic extFloat80_t ui32_to_extF80( input unsigned int );
-    import "DPI-C" function automatic float128_t ui32_to_f128( input unsigned int );
+    import "DPI-C" function automatic extFloat80_t ui32_to_extF80( input int unsigned );
+    import "DPI-C" function automatic float128_t ui32_to_f128( input int unsigned );
 `endif
-import "DPI-C" function automatic void ui32_to_extF80M( input unsigned int, output extFloat80_t );
-import "DPI-C" function automatic void ui32_to_f128M( input unsigned int, output float128_t );
-import "DPI-C" function automatic float16_t ui64_to_f16( input unsigned longint );
-import "DPI-C" function automatic float32_t ui64_to_f32( input unsigned longint );
-import "DPI-C" function automatic float64_t ui64_to_f64( input unsigned longint );
+import "DPI-C" function automatic void ui32_to_extF80M( input int unsigned, output extFloat80_t );
+import "DPI-C" function automatic void ui32_to_f128M( input int unsigned, output float128_t );
+import "DPI-C" function automatic float16_t ui64_to_f16( input longint unsigned );
+import "DPI-C" function automatic float32_t ui64_to_f32( input longint unsigned );
+import "DPI-C" function automatic float64_t ui64_to_f64( input longint unsigned );
 `ifdef SOFTFLOAT_FAST_INT64
-    import "DPI-C" function automatic extFloat80_t ui64_to_extF80( input unsigned longint );
-    import "DPI-C" function automatic float128_t ui64_to_f128( input unsigned longint );
+    import "DPI-C" function automatic extFloat80_t ui64_to_extF80( input longint unsigned );
+    import "DPI-C" function automatic float128_t ui64_to_f128( input longint unsigned );
 `endif
-import "DPI-C" function automatic void ui64_to_extF80M( input unsigned longint, output extFloat80_t );
-import "DPI-C" function automatic void ui64_to_f128M( input unsigned longint, output float128_t );
-import "DPI-C" function automatic bfloat16_t i32_to_bf16( input signed int );
-import "DPI-C" function automatic float16_t i32_to_f16( input signed int );
-import "DPI-C" function automatic float32_t i32_to_f32( input signed int );
-import "DPI-C" function automatic float64_t i32_to_f64( input signed int );
+import "DPI-C" function automatic void ui64_to_extF80M( input longint unsigned, output extFloat80_t );
+import "DPI-C" function automatic void ui64_to_f128M( input longint unsigned, output float128_t );
+import "DPI-C" function automatic bfloat16_t i32_to_bf16( input int signed );
+import "DPI-C" function automatic float16_t i32_to_f16( input int signed );
+import "DPI-C" function automatic float32_t i32_to_f32( input int signed );
+import "DPI-C" function automatic float64_t i32_to_f64( input int signed );
 `ifdef SOFTFLOAT_FAST_INT64
-    import "DPI-C" function automatic extFloat80_t i32_to_extF80( input signed int );
-    import "DPI-C" function automatic float128_t i32_to_f128( input signed int );
+    import "DPI-C" function automatic extFloat80_t i32_to_extF80( input int signed );
+    import "DPI-C" function automatic float128_t i32_to_f128( input int signed );
 `endif
-import "DPI-C" function automatic void i32_to_extF80M( input signed int, output extFloat80_t );
-import "DPI-C" function automatic void i32_to_f128M( input signed int, output float128_t );
-import "DPI-C" function automatic float16_t i64_to_f16( input signed longint );
-import "DPI-C" function automatic float32_t i64_to_f32( input signed longint );
-import "DPI-C" function automatic float64_t i64_to_f64( input signed longint );
+import "DPI-C" function automatic void i32_to_extF80M( input int signed, output extFloat80_t );
+import "DPI-C" function automatic void i32_to_f128M( input int signed, output float128_t );
+import "DPI-C" function automatic float16_t i64_to_f16( input longint signed );
+import "DPI-C" function automatic float32_t i64_to_f32( input longint signed );
+import "DPI-C" function automatic float64_t i64_to_f64( input longint signed );
 `ifdef SOFTFLOAT_FAST_INT64
-    import "DPI-C" function automatic extFloat80_t i64_to_extF80( input signed longint );
-    import "DPI-C" function automatic float128_t i64_to_f128( input signed longint );
+    import "DPI-C" function automatic extFloat80_t i64_to_extF80( input longint signed );
+    import "DPI-C" function automatic float128_t i64_to_f128( input longint signed );
 `endif
-import "DPI-C" function automatic void i64_to_extF80M( input signed longint, output extFloat80_t );
-import "DPI-C" function automatic void i64_to_f128M( input signed longint, output float128_t );
+import "DPI-C" function automatic void i64_to_extF80M( input longint signed, output extFloat80_t );
+import "DPI-C" function automatic void i64_to_f128M( input longint signed, output float128_t );
 
 /*----------------------------------------------------------------------------
 | 16-bit (half-precision) floating-point operations.
 *----------------------------------------------------------------------------*/
-import "DPI-C" function automatic unsigned byte f16_to_ui8( input float16_t, input unsigned byte, input bit );
-import "DPI-C" function automatic unsigned shortint f16_to_ui16( input float16_t, input unsigned byte, input bit );
-import "DPI-C" function automatic unsigned int f16_to_ui32( input float16_t, input unsigned byte, input bit );
-import "DPI-C" function automatic unsigned longint f16_to_ui64( input float16_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed byte f16_to_i8( input float16_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed shortint f16_to_i16( input float16_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed int f16_to_i32( input float16_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed longint f16_to_i64( input float16_t, input unsigned byte, input bit );
-import "DPI-C" function automatic unsigned int f16_to_ui32_r_minMag( input float16_t, input bit );
-import "DPI-C" function automatic unsigned longint f16_to_ui64_r_minMag( input float16_t, input bit );
-import "DPI-C" function automatic signed int f16_to_i32_r_minMag( input float16_t, input bit );
-import "DPI-C" function automatic signed longint f16_to_i64_r_minMag( input float16_t, input bit );
+import "DPI-C" function automatic byte unsigned f16_to_ui8( input float16_t, input byte unsigned, input bit );
+import "DPI-C" function automatic shortint unsigned f16_to_ui16( input float16_t, input byte unsigned, input bit );
+import "DPI-C" function automatic int unsigned f16_to_ui32( input float16_t, input byte unsigned, input bit );
+import "DPI-C" function automatic longint unsigned f16_to_ui64( input float16_t, input byte unsigned, input bit );
+import "DPI-C" function automatic byte signed f16_to_i8( input float16_t, input byte unsigned, input bit );
+import "DPI-C" function automatic shortint signed f16_to_i16( input float16_t, input byte unsigned, input bit );
+import "DPI-C" function automatic int signed f16_to_i32( input float16_t, input byte unsigned, input bit );
+import "DPI-C" function automatic longint signed f16_to_i64( input float16_t, input byte unsigned, input bit );
+import "DPI-C" function automatic int unsigned f16_to_ui32_r_minMag( input float16_t, input bit );
+import "DPI-C" function automatic longint unsigned f16_to_ui64_r_minMag( input float16_t, input bit );
+import "DPI-C" function automatic int signed f16_to_i32_r_minMag( input float16_t, input bit );
+import "DPI-C" function automatic longint signed f16_to_i64_r_minMag( input float16_t, input bit );
 import "DPI-C" function automatic float32_t f16_to_f32( input float16_t );
 import "DPI-C" function automatic float64_t f16_to_f64( input float16_t );
 `ifdef SOFTFLOAT_FAST_INT64
@@ -112,7 +112,7 @@ import "DPI-C" function automatic float64_t f16_to_f64( input float16_t );
 `endif
 import "DPI-C" function automatic void f16_to_extF80M( input float16_t, output extFloat80_t );
 import "DPI-C" function automatic void f16_to_f128M( input float16_t, output float128_t );
-import "DPI-C" function automatic float16_t f16_roundToInt( input float16_t, input unsigned byte, input bit );
+import "DPI-C" function automatic float16_t f16_roundToInt( input float16_t, input byte unsigned, input bit );
 import "DPI-C" function automatic float16_t f16_add( input float16_t, input float16_t );
 import "DPI-C" function automatic float16_t f16_sub( input float16_t, input float16_t );
 import "DPI-C" function automatic float16_t f16_max( input float16_t, input float16_t );
@@ -130,17 +130,17 @@ import "DPI-C" function automatic bit f16_le_quiet( input float16_t, input float
 import "DPI-C" function automatic bit f16_lt_quiet( input float16_t, input float16_t );
 import "DPI-C" function automatic bit f16_isSignalingNaN( input float16_t );
 import "DPI-C" function automatic bit f16_sign( input float16_t );
-import "DPI-C" function automatic unsigned shortint f16_classify( input float16_t );
+import "DPI-C" function automatic shortint unsigned f16_classify( input float16_t );
 import "DPI-C" function automatic float16_t f16_rsqrte7( input float16_t );
 import "DPI-C" function automatic float16_t f16_recip7( input float16_t );
 
 /*----------------------------------------------------------------------------
 | BFloat16 operations.
 *----------------------------------------------------------------------------*/
-import "DPI-C" function automatic unsigned byte bf16_to_ui8( input bfloat16_t, input unsigned byte, input bit );
-import "DPI-C" function automatic unsigned int bf16_to_ui32( input bfloat16_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed byte bf16_to_i8( input bfloat16_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed int bf16_to_i32( input bfloat16_t, input unsigned byte, input bit );
+import "DPI-C" function automatic byte unsigned bf16_to_ui8( input bfloat16_t, input byte unsigned, input bit );
+import "DPI-C" function automatic int unsigned bf16_to_ui32( input bfloat16_t, input byte unsigned, input bit );
+import "DPI-C" function automatic byte signed bf16_to_i8( input bfloat16_t, input byte unsigned, input bit );
+import "DPI-C" function automatic int signed bf16_to_i32( input bfloat16_t, input byte unsigned, input bit );
 import "DPI-C" function automatic float32_t bf16_to_f32( input bfloat16_t );
 import "DPI-C" function automatic float64_t bf16_to_f64( input bfloat16_t );
 import "DPI-C" function automatic bfloat16_t bf16_add( input bfloat16_t, input bfloat16_t );
@@ -155,23 +155,23 @@ import "DPI-C" function automatic bit bf16_eq( input bfloat16_t, input bfloat16_
 import "DPI-C" function automatic bit bf16_le( input bfloat16_t, input bfloat16_t );
 import "DPI-C" function automatic bit bf16_lt( input bfloat16_t, input bfloat16_t );
 import "DPI-C" function automatic bit bf16_sign( input bfloat16_t );
-import "DPI-C" function automatic unsigned shortint bf16_classify( input bfloat16_t );
+import "DPI-C" function automatic shortint unsigned bf16_classify( input bfloat16_t );
 import "DPI-C" function automatic bfloat16_t bf16_rsqrte7( input bfloat16_t );
 import "DPI-C" function automatic bfloat16_t bf16_recip7( input bfloat16_t );
 
 /*----------------------------------------------------------------------------
 | 32-bit (single-precision) floating-point operations.
 *----------------------------------------------------------------------------*/
-import "DPI-C" function automatic unsigned shortint f32_to_ui16( input float32_t, input unsigned byte, input bit );
-import "DPI-C" function automatic unsigned int f32_to_ui32( input float32_t, input unsigned byte, input bit );
-import "DPI-C" function automatic unsigned longint f32_to_ui64( input float32_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed shortint f32_to_i16( input float32_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed int f32_to_i32( input float32_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed longint f32_to_i64( input float32_t, input unsigned byte, input bit );
-import "DPI-C" function automatic unsigned int f32_to_ui32_r_minMag( input float32_t, input bit );
-import "DPI-C" function automatic unsigned longint f32_to_ui64_r_minMag( input float32_t, input bit );
-import "DPI-C" function automatic signed int f32_to_i32_r_minMag( input float32_t, input bit );
-import "DPI-C" function automatic signed longint f32_to_i64_r_minMag( input float32_t, input bit );
+import "DPI-C" function automatic shortint unsigned f32_to_ui16( input float32_t, input byte unsigned, input bit );
+import "DPI-C" function automatic int unsigned f32_to_ui32( input float32_t, input byte unsigned, input bit );
+import "DPI-C" function automatic longint unsigned f32_to_ui64( input float32_t, input byte unsigned, input bit );
+import "DPI-C" function automatic shortint signed f32_to_i16( input float32_t, input byte unsigned, input bit );
+import "DPI-C" function automatic int signed f32_to_i32( input float32_t, input byte unsigned, input bit );
+import "DPI-C" function automatic longint signed f32_to_i64( input float32_t, input byte unsigned, input bit );
+import "DPI-C" function automatic int unsigned f32_to_ui32_r_minMag( input float32_t, input bit );
+import "DPI-C" function automatic longint unsigned f32_to_ui64_r_minMag( input float32_t, input bit );
+import "DPI-C" function automatic int signed f32_to_i32_r_minMag( input float32_t, input bit );
+import "DPI-C" function automatic longint signed f32_to_i64_r_minMag( input float32_t, input bit );
 import "DPI-C" function automatic bfloat16_t f32_to_bf16( input float32_t );
 import "DPI-C" function automatic float16_t f32_to_f16( input float32_t );
 import "DPI-C" function automatic float64_t f32_to_f64( input float32_t );
@@ -181,7 +181,7 @@ import "DPI-C" function automatic float64_t f32_to_f64( input float32_t );
 `endif
 import "DPI-C" function automatic void f32_to_extF80M( input float32_t, output extFloat80_t );
 import "DPI-C" function automatic void f32_to_f128M( input float32_t, output float128_t );
-import "DPI-C" function automatic float32_t f32_roundToInt( input float32_t, input unsigned byte, input bit );
+import "DPI-C" function automatic float32_t f32_roundToInt( input float32_t, input byte unsigned, input bit );
 import "DPI-C" function automatic float32_t f32_add( input float32_t, input float32_t );
 import "DPI-C" function automatic float32_t f32_sub( input float32_t, input float32_t );
 import "DPI-C" function automatic float32_t f32_max( input float32_t, input float32_t );
@@ -199,21 +199,21 @@ import "DPI-C" function automatic bit f32_le_quiet( input float32_t, input float
 import "DPI-C" function automatic bit f32_lt_quiet( input float32_t, input float32_t );
 import "DPI-C" function automatic bit f32_isSignalingNaN( input float32_t );
 import "DPI-C" function automatic bit f32_sign( input float32_t );
-import "DPI-C" function automatic unsigned shortint f32_classify( input float32_t );
+import "DPI-C" function automatic shortint unsigned f32_classify( input float32_t );
 import "DPI-C" function automatic float32_t f32_rsqrte7( input float32_t );
 import "DPI-C" function automatic float32_t f32_recip7( input float32_t );
 
 /*----------------------------------------------------------------------------
 | 64-bit (double-precision) floating-point operations.
 *----------------------------------------------------------------------------*/
-import "DPI-C" function automatic unsigned int f64_to_ui32( input float64_t, input unsigned byte, input bit );
-import "DPI-C" function automatic unsigned longint f64_to_ui64( input float64_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed int f64_to_i32( input float64_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed longint f64_to_i64( input float64_t, input unsigned byte, input bit );
-import "DPI-C" function automatic unsigned int f64_to_ui32_r_minMag( input float64_t, input bit );
-import "DPI-C" function automatic unsigned longint f64_to_ui64_r_minMag( input float64_t, input bit );
-import "DPI-C" function automatic signed int f64_to_i32_r_minMag( input float64_t, input bit );
-import "DPI-C" function automatic signed longint f64_to_i64_r_minMag( input float64_t, input bit );
+import "DPI-C" function automatic int unsigned f64_to_ui32( input float64_t, input byte unsigned, input bit );
+import "DPI-C" function automatic longint unsigned f64_to_ui64( input float64_t, input byte unsigned, input bit );
+import "DPI-C" function automatic int signed f64_to_i32( input float64_t, input byte unsigned, input bit );
+import "DPI-C" function automatic longint signed f64_to_i64( input float64_t, input byte unsigned, input bit );
+import "DPI-C" function automatic int unsigned f64_to_ui32_r_minMag( input float64_t, input bit );
+import "DPI-C" function automatic longint unsigned f64_to_ui64_r_minMag( input float64_t, input bit );
+import "DPI-C" function automatic int signed f64_to_i32_r_minMag( input float64_t, input bit );
+import "DPI-C" function automatic longint signed f64_to_i64_r_minMag( input float64_t, input bit );
 import "DPI-C" function automatic bfloat16_t f64_to_bf16( input float64_t );
 import "DPI-C" function automatic float16_t f64_to_f16( input float64_t );
 import "DPI-C" function automatic float32_t f64_to_f32( input float64_t );
@@ -223,7 +223,7 @@ import "DPI-C" function automatic float32_t f64_to_f32( input float64_t );
 `endif
 import "DPI-C" function automatic void f64_to_extF80M( input float64_t, output extFloat80_t );
 import "DPI-C" function automatic void f64_to_f128M( input float64_t, output float128_t );
-import "DPI-C" function automatic float64_t f64_roundToInt( input float64_t, input unsigned byte, input bit );
+import "DPI-C" function automatic float64_t f64_roundToInt( input float64_t, input byte unsigned, input bit );
 import "DPI-C" function automatic float64_t f64_add( input float64_t, input float64_t );
 import "DPI-C" function automatic float64_t f64_sub( input float64_t, input float64_t );
 import "DPI-C" function automatic float64_t f64_max( input float64_t, input float64_t );
@@ -241,7 +241,7 @@ import "DPI-C" function automatic bit f64_le_quiet( input float64_t, input float
 import "DPI-C" function automatic bit f64_lt_quiet( input float64_t, input float64_t );
 import "DPI-C" function automatic bit f64_isSignalingNaN( input float64_t );
 import "DPI-C" function automatic bit f64_sign( input float64_t );
-import "DPI-C" function automatic unsigned shortint f64_classify( input float64_t );
+import "DPI-C" function automatic shortint unsigned f64_classify( input float64_t );
 import "DPI-C" function automatic float64_t f64_rsqrte7( input float64_t );
 import "DPI-C" function automatic float64_t f64_recip7( input float64_t );
 
@@ -252,19 +252,19 @@ import "DPI-C" function automatic float64_t f64_recip7( input float64_t );
 
 /*
 `ifdef SOFTFLOAT_FAST_INT64
-    import "DPI-C" function automatic unsigned int extF80_to_ui32( input extFloat80_t, input unsigned byte, input bit );
-    import "DPI-C" function automatic unsigned longint extF80_to_ui64( input extFloat80_t, input unsigned byte, input bit );
-    import "DPI-C" function automatic signed int extF80_to_i32( input extFloat80_t, input unsigned byte, input bit );
-    import "DPI-C" function automatic signed longint extF80_to_i64( input extFloat80_t, input unsigned byte, input bit );
-    import "DPI-C" function automatic unsigned int extF80_to_ui32_r_minMag( input extFloat80_t, input bit );
-    import "DPI-C" function automatic unsigned longint extF80_to_ui64_r_minMag( input extFloat80_t, input bit );
-    import "DPI-C" function automatic signed int extF80_to_i32_r_minMag( input extFloat80_t, input bit );
-    import "DPI-C" function automatic signed longint extF80_to_i64_r_minMag( input extFloat80_t, input bit );
+    import "DPI-C" function automatic int unsigned extF80_to_ui32( input extFloat80_t, input byte unsigned, input bit );
+    import "DPI-C" function automatic longint unsigned extF80_to_ui64( input extFloat80_t, input byte unsigned, input bit );
+    import "DPI-C" function automatic int signed extF80_to_i32( input extFloat80_t, input byte unsigned, input bit );
+    import "DPI-C" function automatic longint signed extF80_to_i64( input extFloat80_t, input byte unsigned, input bit );
+    import "DPI-C" function automatic int unsigned extF80_to_ui32_r_minMag( input extFloat80_t, input bit );
+    import "DPI-C" function automatic longint unsigned extF80_to_ui64_r_minMag( input extFloat80_t, input bit );
+    import "DPI-C" function automatic int signed extF80_to_i32_r_minMag( input extFloat80_t, input bit );
+    import "DPI-C" function automatic longint signed extF80_to_i64_r_minMag( input extFloat80_t, input bit );
     import "DPI-C" function automatic float16_t extF80_to_f16( input extFloat80_t );
     import "DPI-C" function automatic float32_t extF80_to_f32( input extFloat80_t );
     import "DPI-C" function automatic float64_t extF80_to_f64( input extFloat80_t );
     import "DPI-C" function automatic float128_t extF80_to_f128( input extFloat80_t );
-    import "DPI-C" function automatic extFloat80_t extF80_roundToInt( input extFloat80_t, input unsigned byte, input bit );
+    import "DPI-C" function automatic extFloat80_t extF80_roundToInt( input extFloat80_t, input byte unsigned, input bit );
     import "DPI-C" function automatic extFloat80_t extF80_add( input extFloat80_t, input extFloat80_t );
     import "DPI-C" function automatic extFloat80_t extF80_sub( input extFloat80_t, input extFloat80_t );
     import "DPI-C" function automatic extFloat80_t extF80_mul( input extFloat80_t, input extFloat80_t );
@@ -279,19 +279,19 @@ import "DPI-C" function automatic float64_t f64_recip7( input float64_t );
     import "DPI-C" function automatic bit extF80_lt_quiet( input extFloat80_t, input extFloat80_t );
     import "DPI-C" function automatic bit extF80_isSignalingNaN( input extFloat80_t );
 `endif
-import "DPI-C" function automatic unsigned int extF80M_to_ui32( output extFloat80_t, input unsigned byte, input bit );
-import "DPI-C" function automatic unsigned longint extF80M_to_ui64( output extFloat80_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed int extF80M_to_i32( output extFloat80_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed longint extF80M_to_i64( output extFloat80_t, input unsigned byte, input bit );
-import "DPI-C" function automatic unsigned int extF80M_to_ui32_r_minMag( output extFloat80_t, input bit );
-import "DPI-C" function automatic unsigned longint extF80M_to_ui64_r_minMag( output extFloat80_t, input bit );
-import "DPI-C" function automatic signed int extF80M_to_i32_r_minMag( output extFloat80_t, input bit );
-import "DPI-C" function automatic signed longint extF80M_to_i64_r_minMag( output extFloat80_t, input bit );
+import "DPI-C" function automatic int unsigned extF80M_to_ui32( output extFloat80_t, input byte unsigned, input bit );
+import "DPI-C" function automatic longint unsigned extF80M_to_ui64( output extFloat80_t, input byte unsigned, input bit );
+import "DPI-C" function automatic int signed extF80M_to_i32( output extFloat80_t, input byte unsigned, input bit );
+import "DPI-C" function automatic longint signed extF80M_to_i64( output extFloat80_t, input byte unsigned, input bit );
+import "DPI-C" function automatic int unsigned extF80M_to_ui32_r_minMag( output extFloat80_t, input bit );
+import "DPI-C" function automatic longint unsigned extF80M_to_ui64_r_minMag( output extFloat80_t, input bit );
+import "DPI-C" function automatic int signed extF80M_to_i32_r_minMag( output extFloat80_t, input bit );
+import "DPI-C" function automatic longint signed extF80M_to_i64_r_minMag( output extFloat80_t, input bit );
 import "DPI-C" function automatic float16_t extF80M_to_f16( output extFloat80_t );
 import "DPI-C" function automatic float32_t extF80M_to_f32( output extFloat80_t );
 import "DPI-C" function automatic float64_t extF80M_to_f64( output extFloat80_t );
 import "DPI-C" function automatic void extF80M_to_f128M( output extFloat80_t, output float128_t );
-import "DPI-C" function automatic void extF80M_roundToInt(output extFloat80_t, input unsigned byte, input bit, output extFloat80_t );
+import "DPI-C" function automatic void extF80M_roundToInt(output extFloat80_t, input byte unsigned, input bit, output extFloat80_t );
 import "DPI-C" function automatic void extF80M_add( output extFloat80_t, output extFloat80_t, output extFloat80_t );
 import "DPI-C" function automatic void extF80M_sub( output extFloat80_t, output extFloat80_t, output extFloat80_t );
 import "DPI-C" function automatic void extF80M_mul( output extFloat80_t, output extFloat80_t, output extFloat80_t );
@@ -311,19 +311,19 @@ import "DPI-C" function automatic bit extF80M_isSignalingNaN( output extFloat80_
 | 128-bit (quadruple-precision) floating-point operations.
 *----------------------------------------------------------------------------*/
 `ifdef SOFTFLOAT_FAST_INT64
-    import "DPI-C" function automatic unsigned int f128_to_ui32( input float128_t, input unsigned byte, input bit );
-    import "DPI-C" function automatic unsigned longint f128_to_ui64( input float128_t, input unsigned byte, input bit );
-    import "DPI-C" function automatic signed int f128_to_i32( input float128_t, input unsigned byte, input bit );
-    import "DPI-C" function automatic signed longint f128_to_i64( input float128_t, input unsigned byte, input bit );
-    import "DPI-C" function automatic unsigned int f128_to_ui32_r_minMag( input float128_t, input bit );
-    import "DPI-C" function automatic unsigned longint f128_to_ui64_r_minMag( input float128_t, input bit );
-    import "DPI-C" function automatic signed int f128_to_i32_r_minMag( input float128_t, input bit );
-    import "DPI-C" function automatic signed longint f128_to_i64_r_minMag( input float128_t, input bit );
+    import "DPI-C" function automatic int unsigned f128_to_ui32( input float128_t, input byte unsigned, input bit );
+    import "DPI-C" function automatic longint unsigned f128_to_ui64( input float128_t, input byte unsigned, input bit );
+    import "DPI-C" function automatic int signed f128_to_i32( input float128_t, input byte unsigned, input bit );
+    import "DPI-C" function automatic longint signed f128_to_i64( input float128_t, input byte unsigned, input bit );
+    import "DPI-C" function automatic int unsigned f128_to_ui32_r_minMag( input float128_t, input bit );
+    import "DPI-C" function automatic longint unsigned f128_to_ui64_r_minMag( input float128_t, input bit );
+    import "DPI-C" function automatic int signed f128_to_i32_r_minMag( input float128_t, input bit );
+    import "DPI-C" function automatic longint signed f128_to_i64_r_minMag( input float128_t, input bit );
     import "DPI-C" function automatic float16_t f128_to_f16( input float128_t );
     import "DPI-C" function automatic float32_t f128_to_f32( input float128_t );
     import "DPI-C" function automatic float64_t f128_to_f64( input float128_t );
     import "DPI-C" function automatic extFloat80_t f128_to_extF80( input float128_t );
-    import "DPI-C" function automatic float128_t f128_roundToInt( input float128_t, input unsigned byte, input bit );
+    import "DPI-C" function automatic float128_t f128_roundToInt( input float128_t, input byte unsigned, input bit );
     import "DPI-C" function automatic float128_t f128_add( input float128_t, input float128_t );
     import "DPI-C" function automatic float128_t f128_sub( input float128_t, input float128_t );
     import "DPI-C" function automatic float128_t f128_mul( input float128_t, input float128_t );
@@ -338,21 +338,21 @@ import "DPI-C" function automatic bit extF80M_isSignalingNaN( output extFloat80_
     import "DPI-C" function automatic bit f128_le_quiet( input float128_t, input float128_t );
     import "DPI-C" function automatic bit f128_lt_quiet( input float128_t, input float128_t );
     import "DPI-C" function automatic bit f128_isSignalingNaN( input float128_t );
-    import "DPI-C" function automatic unsigned shortint f128_classify( input float128_t );
+    import "DPI-C" function automatic shortint unsigned f128_classify( input float128_t );
 `endif
-import "DPI-C" function automatic unsigned int f128M_to_ui32( output float128_t, input unsigned byte, input bit );
-import "DPI-C" function automatic unsigned longint f128M_to_ui64( output float128_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed int f128M_to_i32( output float128_t, input unsigned byte, input bit );
-import "DPI-C" function automatic signed longint f128M_to_i64( output float128_t, input unsigned byte, input bit );
-import "DPI-C" function automatic unsigned int f128M_to_ui32_r_minMag( output float128_t, input bit );
-import "DPI-C" function automatic unsigned longint f128M_to_ui64_r_minMag( output float128_t, input bit );
-import "DPI-C" function automatic signed int f128M_to_i32_r_minMag( output float128_t, input bit );
-import "DPI-C" function automatic signed longint f128M_to_i64_r_minMag( output float128_t, input bit );
+import "DPI-C" function automatic int unsigned f128M_to_ui32( output float128_t, input byte unsigned, input bit );
+import "DPI-C" function automatic longint unsigned f128M_to_ui64( output float128_t, input byte unsigned, input bit );
+import "DPI-C" function automatic int signed f128M_to_i32( output float128_t, input byte unsigned, input bit );
+import "DPI-C" function automatic longint signed f128M_to_i64( output float128_t, input byte unsigned, input bit );
+import "DPI-C" function automatic int unsigned f128M_to_ui32_r_minMag( output float128_t, input bit );
+import "DPI-C" function automatic longint unsigned f128M_to_ui64_r_minMag( output float128_t, input bit );
+import "DPI-C" function automatic int signed f128M_to_i32_r_minMag( output float128_t, input bit );
+import "DPI-C" function automatic longint signed f128M_to_i64_r_minMag( output float128_t, input bit );
 import "DPI-C" function automatic float16_t f128M_to_f16( output float128_t );
 import "DPI-C" function automatic float32_t f128M_to_f32( output float128_t );
 import "DPI-C" function automatic float64_t f128M_to_f64( output float128_t );
 import "DPI-C" function automatic void f128M_to_extF80M( output float128_t, output extFloat80_t );
-import "DPI-C" function automatic void f128M_roundToInt( output float128_t, input unsigned byte, input bit, output float128_t );
+import "DPI-C" function automatic void f128M_roundToInt( output float128_t, input byte unsigned, input bit, output float128_t );
 import "DPI-C" function automatic void f128M_add( output float128_t, output float128_t, output float128_t );
 import "DPI-C" function automatic void f128M_sub( output float128_t, output float128_t, output float128_t );
 import "DPI-C" function automatic void f128M_mul( output float128_t, output float128_t, output float128_t );
