@@ -14,9 +14,10 @@ extern "C" {
 #define TEST_VECTOR_WIDTH_HEX  144
 #define COVER_VECTOR_WIDTH_HEX 201
 
-#define TEST_VECTOR_WIDTH_HEX_WITH_SEPARATORS (TEST_VECTOR_WIDTH_HEX + 8)
+// #define TEST_VECTOR_WIDTH_HEX_WITH_SEPARATORS (TEST_VECTOR_WIDTH_HEX + 8)
+// #define MAX_LINE_LEN (TEST_VECTOR_WIDTH_HEX_WITH_SEPARATORS + 10)
 
-#define MAX_LINE_LEN (TEST_VECTOR_WIDTH_HEX_WITH_SEPARATORS + 10)
+#define MAX_LINE_LEN 512
 
 #define MAX_TOKEN_LEN 48
 
@@ -73,8 +74,8 @@ typedef struct {
     uint64_t lower;
 } uint128_t;
 
-#define UINT128_TO_FLOAT16(f, x)  (f.v = (uint16_t) (x->lower & 0xF))  
-#define UINT128_TO_FLOAT32(f, x)  (f.v = (uint32_t) (x->lower & 0xFF))
+#define UINT128_TO_FLOAT16(f, x)  (f.v = (uint16_t) (x->lower & 0xFFFF))  
+#define UINT128_TO_FLOAT32(f, x)  (f.v = (uint32_t) (x->lower & 0xFFFFFFFF))
 #define UINT128_TO_FLOAT64(f, x)  (f.v = (uint64_t) (x->lower))
 #define UINT128_TO_FLOAT128(f, x) do {                    \
                                        f.v[0] = x->upper; \

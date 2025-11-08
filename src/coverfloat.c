@@ -18,11 +18,11 @@ void softFloat_setRoundingMode (uint_fast8_t rm) {
 
 void softfloat_getIntermResults (intermResult_t * result) {
 
-    result->sign     = softfloat_intermediateResult->sign;
-    result->exp      = softfloat_intermediateResult->exp;
-    result->sig64    = softfloat_intermediateResult->sig64;
-    result->sig0     = softfloat_intermediateResult->sig0;
-    result->sigExtra = softfloat_intermediateResult->sigExtra;
+    result->sign     = softfloat_intermediateResult.sign;
+    result->exp      = softfloat_intermediateResult.exp;
+    result->sig64    = softfloat_intermediateResult.sig64;
+    result->sig0     = softfloat_intermediateResult.sig0;
+    result->sigExtra = softfloat_intermediateResult.sigExtra;
 
 }
 
@@ -68,9 +68,6 @@ uint128_t parse_hex_128(const char *hex) {
 
     return value;
 }
-
-
-
 
 
 void reference_model( const uint32_t       * op,
@@ -146,6 +143,41 @@ void reference_model( const uint32_t       * op,
                 /* ... */
 
             }
+
+            break;
+        }
+
+        case OP_MUL: {
+            
+            switch (*operandFmt) {
+                case FMT_SINGLE: {
+                    float32_t af, bf, resultf;
+                    UINT128_TO_FLOAT32(af, a);
+                    UINT128_TO_FLOAT32(bf, b);
+                    resultf = f32_mul(af, bf);
+                    FLOAT32_TO_UINT128(result, resultf);
+
+                    // printf("performing single precision mul!!\n");
+                    // printf("int operands are: %x and %x\n", *a, *b);
+                    // printf("float operands are: %x and %x\n", af.v, bf.v);
+                    // printf("float result is %x\n", resultf.v);
+                    // printf("int result is %032x%032x\n", result->upper, result->lower);
+                    break;
+                }
+
+                case FMT_DOUBLE: {
+                    float64_t af, bf, resultf;
+                    UINT128_TO_FLOAT64(af, a);
+                    UINT128_TO_FLOAT64(bf, b);
+                    resultf = f64_mul(af, bf);
+                    FLOAT64_TO_UINT128(result, resultf);
+                    break;
+                }
+
+                /* ... */
+
+            }
+
             break;
         }
 
@@ -177,24 +209,24 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    char line[TEST_VECTOR_WIDTH_HEX_WITH_SEPARATORS + 2];
+    char line[MAX_LINE_LEN];
     while (fgets(line, sizeof(line), fin)) {
         // Strip newline
         line[strcspn(line, "\r\n")] = '\0';
 
-        char     op_str[MAX_TOKEN_LEN];
-        char     rm_str[MAX_TOKEN_LEN];
-        char      a_str[MAX_TOKEN_LEN];
-        char      b_str[MAX_TOKEN_LEN];
-        char      c_str[MAX_TOKEN_LEN];
-        char  opFmt_str[MAX_TOKEN_LEN];
-        char    res_str[MAX_TOKEN_LEN];
-        char resFmt_str[MAX_TOKEN_LEN];
-        char  flags_str[MAX_TOKEN_LEN];
+        char     op_str[MAX_TOKEN_LEN + 1]; // plus one for space for null terminator
+        char     rm_str[MAX_TOKEN_LEN + 1];
+        char      a_str[MAX_TOKEN_LEN + 1];
+        char      b_str[MAX_TOKEN_LEN + 1];
+        char      c_str[MAX_TOKEN_LEN + 1];
+        char  opFmt_str[MAX_TOKEN_LEN + 1];
+        char    res_str[MAX_TOKEN_LEN + 1];
+        char resFmt_str[MAX_TOKEN_LEN + 1];
+        char  flags_str[MAX_TOKEN_LEN + 1];
 
         if (line[0] == '/' && line[1] == '/') continue;
 
-        if (sscanf(line, "%48[^_]_%48[^_]_%48s_%48[^_]_%48[^_]_%48s_%48[^_]_%48[^_]_%48s", 
+        if (sscanf(line, "%48[^_]_%48[^_]_%48[^_]_%48[^_]_%48[^_]_%48[^_]_%48[^_]_%48[^_]_%48[^_ \t\r\n]", 
             op_str, rm_str, a_str, b_str, c_str, opFmt_str, res_str, resFmt_str, flags_str) != 9) {
             fprintf(stderr, "Skipping malformed line: %s\n", line);
             continue;
@@ -234,13 +266,14 @@ int main(int argc, char *argv[]) {
                         &intermRes );
 
         // Write cover vector (append intermediate result to test vector)
-        fprintf(fout, "%s_%04x_%032x_%064x%064x%064x\n", 
+        fprintf(fout, "%s_%01x_%08x_%016x%016x%016x\n", 
                 line, intermRes.sign, intermRes.exp, intermRes.sig64, intermRes.sig0, intermRes.sigExtra);
 
         // confirm softfloat output matches testvectors
         if (res.upper   != newRes.upper   || res.lower   != newRes.lower ||     // outputs don't match
             flags != newFlags                                              ) {  // flags   don't match
-            fprintf(stderr, "Error: testvector output doesn't match expected value\nTestVector output: %x\nExpected output: %x", res, newRes);
+            fprintf(stderr, "Error: testvector output doesn't match expected value\nTestVector output: %016x%016x\nExpected output: %016x%016x\nTestVector Flags: %02x\nExpected Flags: %02x\n", 
+                res.upper, res.lower, newRes.upper, newRes.lower, flags, newFlags);
             fclose(fin);
             fclose(fout);
             return EXIT_FAILURE;
