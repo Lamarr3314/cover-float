@@ -14,6 +14,10 @@ extern "C" {
 #define TEST_VECTOR_WIDTH_HEX  144
 #define COVER_VECTOR_WIDTH_HEX 201
 
+#define TEST_VECTOR_WIDTH_HEX_WITH_SEPARATORS (TEST_VECTOR_WIDTH_HEX + 8)
+
+#define MAX_LINE_LEN (TEST_VECTOR_WIDTH_HEX_WITH_SEPARATORS + 10)
+
 #define MAX_TOKEN_LEN 48
 
 // arbitary encoding of IBM paper operations
@@ -63,6 +67,39 @@ extern "C" {
 #define FMT_UINT   0x11000001
 #define FMT_LONG   0x10000010
 #define FMT_ULONG  0x11000010
+
+typedef struct {
+    uint64_t upper;
+    uint64_t lower;
+} uint128_t;
+
+#define UINT128_TO_FLOAT16(f, x)  (f.v = (uint16_t) (x->lower & 0xF))  
+#define UINT128_TO_FLOAT32(f, x)  (f.v = (uint32_t) (x->lower & 0xFF))
+#define UINT128_TO_FLOAT64(f, x)  (f.v = (uint64_t) (x->lower))
+#define UINT128_TO_FLOAT128(f, x) do {                    \
+                                       f.v[0] = x->upper; \
+                                       f.v[1] = x->lower; \
+                                     } while (0)
+
+#define FLOAT16_TO_UINT128(x, f)  do {                    \
+                                       x->upper = 0;      \
+                                       x->lower = f.v;    \
+                                     } while (0)
+
+#define FLOAT32_TO_UINT128(x, f)  do {                    \
+                                       x->upper = 0;      \
+                                       x->lower = f.v;    \
+                                     } while (0)
+
+#define FLOAT64_TO_UINT128(x, f)  do {                    \
+                                       x->upper = 0;      \
+                                       x->lower = f.v;    \
+                                     } while (0)
+
+#define FLOAT128_TO_UINT128(x, f) do {                    \
+                                       x->upper = f.v[0]; \
+                                       x->lower = f.v[1]; \
+                                     } while (0)
 
 void softFloat_clearFlags( uint_fast8_t );
 

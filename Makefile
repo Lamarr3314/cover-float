@@ -26,7 +26,7 @@ INC_FLAGS   := $(addprefix -I,$(INC_DIRS))
 
 # Command for creating directories
 MKDIR_P     ?= mkdir -p
-RM          ?= rm -rf
+RM_CMD      ?= rm -rf
 
 # --- Targets ---
 
@@ -50,7 +50,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIRS)/%.c
 # Clean target to remove build artifacts
 clean:
 	@echo "Cleaning build directory..."
-	$(RM) $(BUILD_DIR)
+	$(RM_CMD) $(BUILD_DIR)
 
 # --- Include Dependency Files ---
 # Include auto-generated dependency files if they exist
