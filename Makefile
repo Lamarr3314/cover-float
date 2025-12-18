@@ -1,8 +1,7 @@
 # --- Project Configuration ---
 TARGET_EXEC ?= coverfloat_reference
 BUILD_DIR   ?= ./build
-# TODO: yuck fix paths
-SRC_DIRS    ?= ./src ./../riscv-isa-sim/softfloat/
+SRC_DIRS    ?= ./src ./submodules/spike/softfloat/
 
 # Compiler and Flags
 CC          ?= gcc

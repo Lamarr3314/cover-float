@@ -2,10 +2,10 @@
 #define COVERFLOAT_H_INCLUDED
 
 #include <stdint.h>
-#include "../../riscv-isa-sim/softfloat/platform.h"
-#include "../../riscv-isa-sim/softfloat/internals.h"
-#include "../../riscv-isa-sim/softfloat/specialize.h"
-#include "../../riscv-isa-sim/softfloat/softfloat.h" // TODO: yuck fix paths
+#include "../submodules/spike/softfloat/platform.h"
+#include "../submodules/spike/softfloat/internals.h"
+#include "../submodules/spike/softfloat/specialize.h"
+#include "../submodules/spike/softfloat/softfloat.h"
 
 #ifdef __cplusplus
 extern "C" {
