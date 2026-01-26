@@ -29,7 +29,7 @@ RM_CMD      ?= rm -rf
 
 # --- Targets ---
 
-.PHONY: all clean 
+.PHONY: all clean sim tests
 
 all: $(BUILD_DIR)/$(TARGET_EXEC)
 
@@ -45,6 +45,13 @@ $(BUILD_DIR)/%.o: $(SRC_DIRS)/%.c
 	@echo "Compiling C file: $<"
 	$(MKDIR_P) $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+sim: 
+	cd sim && vsim -c -do "do run.do"
+
+tests:
+	python3 script/B1.py && ./build/coverfloat_reference ./tests/testvectors/B1_tv.txt ./tests/covervectors/B1_cv.txt
+	# TODO: Add more as needed
 
 # Clean target to remove build artifacts
 clean:
