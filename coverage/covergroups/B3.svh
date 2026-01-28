@@ -55,11 +55,11 @@ covergroup B3_cg (virtual coverfloat_interface CFI);
 
     rounding_mode_all: coverpoint CFI.rm {
         type_option.weight = 0;
-        bins round_near_even   = ROUND_NEAR_EVEN;
-        bins round_minmag      = ROUND_MINMAG;
-        bins round_min         = ROUND_MIN;
-        bins round_max         = ROUND_MAX;
-        bins round_near_maxmag = ROUND_NEAR_MAXMAG;
+        bins round_near_even   = {ROUND_NEAR_EVEN};
+        bins round_minmag      = {ROUND_MINMAG};
+        bins round_min         = {ROUND_MIN};
+        bins round_max         = {ROUND_MAX};
+        bins round_near_maxmag = {ROUND_NEAR_MAXMAG};
     }
 
     op_arith_conv: coverpoint CFI.op {
