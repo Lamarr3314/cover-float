@@ -29,9 +29,9 @@ RM_CMD      ?= rm -rf
 
 # --- Targets ---
 
-.PHONY: all clean sim tests
+.PHONY: build clean sim B1
 
-all: $(BUILD_DIR)/$(TARGET_EXEC)
+build: $(BUILD_DIR)/$(TARGET_EXEC)
 
 # Rule to create the final executable
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
@@ -49,7 +49,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIRS)/%.c
 sim: 
 	cd sim && vsim -c -do "do run.do"
 
-tests:
+B1:
 	python3 script/B1.py && ./build/coverfloat_reference ./tests/testvectors/B1_tv.txt ./tests/covervectors/B1_cv.txt
 	# TODO: Add more as needed
 
