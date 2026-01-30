@@ -16,6 +16,7 @@
 #2) All values in the range [-(p+4), (p+4)]
 #3) 1 value larger than (p+4)
 #
+# hypothetical vectors generated: 473
 #-------- Test # 1 --------
 # (1 value smaller than -(p+4))
 # a_exp - b_exp < -(p + 4)
@@ -55,6 +56,7 @@
 
 import random
 import subprocess
+import coverfloat
 
 TEST_VECTOR_WIDTH_HEX  = 144
 TEST_VECTOR_WIDTH_HEX_WITH_SEPARATORS = (TEST_VECTOR_WIDTH_HEX + 8)
@@ -100,28 +102,8 @@ BIASED_EXP = { # Range of biased exponents based on precision
     FMT_BF16 : [1, 254]
 }
 
-a_mant = 200
+a_mant = 200 #random values because the mantissas don't matter
 b_mant = 2000
-
-
-def coverfloat_reference(line):
-    assert len(line) == TEST_VECTOR_WIDTH_HEX_WITH_SEPARATORS + 1 
-    
-    try:
-        result = subprocess.run(
-            ["./build/coverfloat_reference", "-", "-", "--no-error-check"],
-            input=line,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            check=True
-        )
-        output = result.stdout
-
-    except subprocess.CalledProcessError as e:
-        print("Error:", e.stderr)
-
-    return output[0:TEST_VECTOR_WIDTH_HEX_WITH_SEPARATORS]
 
 
 def decimalComponentsToHex(fmt, sign, biased_exp, mantissa):
@@ -148,7 +130,7 @@ def innerTest(f):
             complete_a = decimalComponentsToHex(fmt, 0, a_exp, a_mant)
             complete_b = decimalComponentsToHex(fmt, 0, b_exp, b_mant)
             
-            print(coverfloat_reference(f"{OP_ADD}_{ROUND_NEAR_EVEN}_{complete_a}_{complete_b}_{32*'0'}_{fmt}_{32*'0'}_{fmt}_00\n"), file=f)
+            print(coverfloat.reference(f"{OP_ADD}_{ROUND_NEAR_EVEN}_{complete_a}_{complete_b}_{32*'0'}_{fmt}_{32*'0'}_{fmt}_00\n"), file=f)
 
             b_exp +=1 #Final statement, increments 1 over
              
@@ -160,7 +142,7 @@ def innerTest(f):
         for i in range(0, p+4):
             complete_a = decimalComponentsToHex(fmt, 0, a_exp, a_mant)
             complete_b = decimalComponentsToHex(fmt, 0, b_exp, b_mant)
-            print(coverfloat_reference(f"{OP_ADD}_{ROUND_NEAR_EVEN}_{complete_a}_{complete_b}_{32*'0'}_{fmt}_{32*'0'}_{fmt}_00\n"), file=f)
+            print(coverfloat.reference(f"{OP_ADD}_{ROUND_NEAR_EVEN}_{complete_a}_{complete_b}_{32*'0'}_{fmt}_{32*'0'}_{fmt}_00\n"), file=f)
 
             b_exp -=1 #Final statement, decrements 1 under
     
@@ -180,9 +162,9 @@ def outerTest(isTestOne, f):
         complete_b = decimalComponentsToHex(fmt, 0, b_exp, b_mant)
                 
         if(isTestOne):
-            print(coverfloat_reference(f"{OP_ADD}_{ROUND_NEAR_EVEN}_{complete_a}_{complete_b}_{32*'0'}_{fmt}_{32*'0'}_{fmt}_00\n"), file=f)
+            print(coverfloat.reference(f"{OP_ADD}_{ROUND_NEAR_EVEN}_{complete_a}_{complete_b}_{32*'0'}_{fmt}_{32*'0'}_{fmt}_00\n"), file=f)
         else:
-            print(coverfloat_reference(f"{OP_ADD}_{ROUND_NEAR_EVEN}_{complete_b}_{complete_a}_{32*'0'}_{fmt}_{32*'0'}_{fmt}_00\n"), file=f)    
+            print(coverfloat.reference(f"{OP_ADD}_{ROUND_NEAR_EVEN}_{complete_b}_{complete_a}_{32*'0'}_{fmt}_{32*'0'}_{fmt}_00\n"), file=f)    
 
 
 def main():
