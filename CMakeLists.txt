@@ -18,7 +18,7 @@ set_target_properties(coverfloat PROPERTIES
 )
 
 
-pybind11_add_module(_core MODULE src/c/main.cpp)
-target_link_libraries(_core PRIVATE coverfloat)
+pybind11_add_module(reference MODULE src/c/main.cpp)
+target_link_libraries(reference PRIVATE coverfloat)
 
-install(TARGETS _core DESTINATION ${SKBUILD_PROJECT_NAME})
+install(TARGETS reference DESTINATION ${SKBUILD_PROJECT_NAME})

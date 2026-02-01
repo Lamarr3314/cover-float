@@ -1,7 +1,7 @@
 import subprocess
 import random
 
-from cover_float._core import run_test_vector
+from cover_float.reference import run_test_vector
 
 TEST_VECTOR_WIDTH_HEX  = 144
 TEST_VECTOR_WIDTH_HEX_WITH_SEPARATORS = (TEST_VECTOR_WIDTH_HEX + 8)

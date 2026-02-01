@@ -1,5 +1,5 @@
 import argparse
-from cover_float._core import run_test_vector
+from cover_float.reference import run_test_vector
 
 import cover_float.testgen as tg
 
