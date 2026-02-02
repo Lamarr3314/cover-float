@@ -59,7 +59,7 @@ covergroup B10_cg (virtual coverfloat_interface CFI);
     F16_exp_diff: coverpoint $signed(int'(CFI.a[14:10]) - int'(CFI.b[14:10])) {
         type_option.weight = 0;
 
-        bins small_diff = {[-(F16_M_BITS + 5) : 0]}; // TODO: THIS NEEDS TO BE 5 NOT 4 SO THAT THE SMALL DIF BINS IS NOT A SUBSET OF MID_DIFF
+        bins small_diff = {[-(F16_M_BITS + 5) : 0]};
         bins mid_diff[] = {[-(F16_M_BITS + 4) : (F16_M_BITS + 4)]};
         bins large_diff = {[ (F16_M_BITS + 5) : $]};
 
