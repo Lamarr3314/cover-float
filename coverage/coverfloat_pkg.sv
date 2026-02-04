@@ -77,5 +77,11 @@ package coverfloat_pkg;
     const int F32_M_BITS   = 23;
     const int F64_M_BITS   = 52;
     const int F128_M_BITS  = 112;
+
+    const int F16_P   = F16_M_BITS  + 1;
+    const int BF16_P  = BF16_M_BITS + 1;
+    const int F32_P   = F32_M_BITS  + 1;
+    const int F64_P   = F64_M_BITS  + 1;
+    const int F128_P  = F128_M_BITS + 1;
     
 endpackage
