@@ -8,7 +8,7 @@ Aharoni et al:
 
 === Description
 
-This model tests every possible value for a shift between the input operands. The difference between the unbiased input exponents is:
+This model tests every possible value for a shift between the input operands. The difference between the unbiased input exponents satisfies each of the following conditions:
 
 * A value smaller than `-(p+4)`
 * All values in the range `[-(p+4), (p+4)]`
@@ -210,7 +210,15 @@ Total: 473
 
 (Accounting for Add/Sub)
 
-[source]
-----
-473(2) = 946
-----
+=== Overall Test Count
+
+[cols="1,1",options="header"]
+|===
+| Description | Value
+
+| Total shift tests
+| 473
+
+| Accounting for Add and Subtract (×2)
+| 946
+|===
