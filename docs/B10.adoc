@@ -47,13 +47,13 @@ Where the variable `p` is defined as “the number of significant bits (precisio
 
 == General Procedure
 
-In order to achieve the desired shift amounts between a and b, the difference between `a_exp` and b_exp needs to be equal to the shift amount specified by each respective test. The following test generation procedures follow the general form of first generating a random value `a_exp` with restrictions based on the shift amount desired. Then, generating the random b_exp with restrictions based on the shift amount desired. Both mantissa and sign bits are randomized.
+In order to achieve the desired shift amounts between `a` and `b`, the difference between `a_exp` and `b_exp` needs to be equal to the shift amount specified by each respective test. The following test generation procedures follow the general form of first generating a random value `a_exp` with restrictions based on the shift amount desired. Then, generating the random `b_exp` with restrictions based on the shift amount desired. Both mantissa and sign bits are randomized.
 
 == Test Procedure
 
 === Test 1
-Objective: A value smaller than -(p+4)  
-Operations: Add, Subtract
+Objective: A value smaller than `-(p+4)`  
+Operations: `Add`, `Subtract`
 
 To cover this test, the inequality:
 
@@ -62,7 +62,7 @@ To cover this test, the inequality:
 a_exp - b_exp < -(p + 4)
 ----
 
-must be satisfied. Given this inequality, the lower bound on `a_exp` must be `min_exp`, because we can always find a value larger than min_exp such that their difference is `< (p+4)`. Now, for determining an upper limit of `a_exp`, we must consider that the largest `b_exp` and `a_exp` can be is `max_exp`. If both `a_exp = max_exp` and `b = max_exp`, then their difference = 0. Therefore, we must decrease `a_exp` by 5 such that:
+must be satisfied. Given this inequality, the lower bound on `a_exp` must be `min_exp`, because we can always find a value larger than `min_exp` such that their difference is `< (p+4)`. Now, for determining an upper limit of `a_exp`, we must consider that the largest `b_exp` and `a_exp` can be is `max_exp`. If both `a_exp = max_exp` and `b` = `max_exp`, then their difference = 0. Therefore, we must decrease `a_exp` by 5 such that:
 
 [source]
 ----
@@ -85,7 +85,7 @@ With `a_exp` determined, the value `b_exp` will become restricted in order to sa
 a_exp - b_exp < -(p + 4)
 ----
 
-Understanding this inequality, b_exp’s upper bound must be max_exp. However, b_exp’s lower bound is restricted by how large `a_exp` is. We can begin by considering the most extreme case where:
+Understanding this inequality, `b_exp`’s upper bound must be `max_exp`. However, b_exp’s lower bound is restricted by how large `a_exp` is. We can begin by considering the most extreme case where:
 
 [source]
 ----
@@ -106,13 +106,13 @@ That means that the possible number of values possible for `b_exp` = the upper b
 possible values of b_exp = (max_exp-(p+5)) - a_exp
 ----
 
-These possible values must be subtracted from max_exp in order to find the lower bound of `b_exp`. The range of `b_exp` = `[max_exp - possible b_exp values, max_exp]`. `b_exp` is randomly generated as a value within the range `[max_exp - possible b_exp values - max_exp]`.
+These possible values must be subtracted from `max_exp` in order to find the lower bound of `b_exp`. The range of `b_exp` = `[max_exp - possible b_exp values, max_exp]`. `b_exp` is randomly generated as a value within the range `[max_exp - possible b_exp values - max_exp]`.
 
 ---
 
 === Test 2
 Objective: All values within the range `[-(p+4), (p+4)]`  
-Operations: Add/Subtract
+Operations: `Add`/`Subtract`
 
 To cover this test:
 
@@ -135,7 +135,7 @@ This will be accomplished by starting with a randomly generated value `a_exp`, s
 b_exp = a_exp
 ----
 
-and then incrementing b_exp by 1 until:
+and then incrementing `b_exp` by 1 until:
 
 [source]
 ----
@@ -151,13 +151,17 @@ max_exp - (p+4)
 
 Because we are not concerned with decrementing below the value `a_exp`, the lower limit of `a_exp` is `min_exp`. `a_exp` is a random value generated within the range `[min_exp, max_exp - (p+4)]`.
 
-With `a_exp` determined, we enter a loop to increment `b_exp`. On the first iteration, `b_exp` = `a_exp` and create a test vector based on this value. After generating this test vector, b_exp is incremented. Looping occurs p+5 times to account for the first case where a_exp = b_exp and to allow for a_exp - b_exp = p+4.
+With `a_exp` determined, we enter a loop to increment `b_exp`. On the first iteration, `b_exp` = `a_exp` and create a test vector based on this value. After generating this test vector, `b_exp` is incremented. Looping occurs `p+5` times to account for the first case where `a_exp` = `b_exp` and to allow for
+[source]
+----
+a_exp - b_exp = p+4.
+----
 
 Now, tests such that:
 
 [source]
 ----
-a_exp - b_exp = all values in the range [-(p+4), -1]
+a_exp - b_exp ∈ [-(p+4), -1]
 ----
 
 must be generated. This can be accomplished by determining a value `a_exp`, setting:
@@ -174,7 +178,7 @@ and decrementing the value of b_exp until:
 a_exp - b_exp = p+4
 ----
 
-Because b_exp will be decremented under the value of `a_exp`, a total of `p+4` times, the lower limit of `a_exp` must be `min_exp + p + 4`. There is no concern of b_exp or a_exp being incremented, so the upper limit of a_exp is max_exp. a_exp was generated as a random value within the range [min_exp + p + 4, max_exp].
+Because `b_exp` will be decremented under the value of `a_exp`, a total of `p+4` times, the lower limit of `a_exp` must be `min_exp + p + 4`. There is no concern of b_exp or a_exp being incremented, so the upper limit of a_exp is max_exp. a_exp was generated as a random value within the range [min_exp + p + 4, max_exp].
 
 With a_exp determined, we enter a loop to decrement b_exp. On the first iteration, b_exp = a_exp - 1 and create a test vector based on this value. Looping occurs p + 4 times to allow for a final value of a_exp - b_exp = p+4.
 
