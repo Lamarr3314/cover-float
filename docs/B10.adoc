@@ -1,107 +1,50 @@
 = Floating Point Model Documentation
 :toc:
-:toclevels: 3
 :sectnums:
 
 == B10 Add: Shift
 
-Aharoni et al.
+Aharoni et al:
 
 === Description
 
-This model tests every possible value for a shift between the input operands.
+This model tests every possible value for a shift between the input operands. The difference between the unbiased input exponents is:
 
-The difference between the unbiased input exponents is:
+* A value smaller than -(p+4)
+* All values in the range [-(p+4), (p+4)]
+* A value larger than p+4
 
-* A value smaller than `-(p+4)`
-* All values in the range `[−(p+4), (p+4)]`
-* A value larger than `p+4`
+Number of tests: 1.5 E 3
 
-*Number of tests:* 1.5E3
+Precisions supported: BF_16, FP_16, FP_32, FP_64, FP_128
 
-*Precisions Supported:* `BF_16`, `FP_16`, `FP_32`, `FP_64`, `FP_128`
-
-*Operations Supported:* Add, Subtract
+Operations Supported: Add, Subtract
 
 == Implementation
 
 === Definitions
 
-`max_exp`:: Maximum exponent value based on precision  
-`min_exp`:: Minimum exponent value based on precision  
-`a`:: Operand 1  
-`b`:: Operand 2  
-`a_exp`:: Exponent of operand `a`, generally in `[min_exp, max_exp]`  
-`b_exp`:: Exponent of operand `b`, generally in `[min_exp, max_exp]`  
-`p`:: Number of significant bits (precision)
+max_exp = the maximum exponent value based on precision  
+min_exp = the minimum exponent value based on precision  
+a = operand 1  
+b = operand 2  
+b_exp = the value of b's exponent, range is generally restricted to [min_exp, max_exp]  
+a_exp = the value of a's exponent, range is generally restricted to [min_exp, max_exp]  
+p = the number of significant bits in precision
 
-== Background
+=== Background
 
-In floating point addition and subtraction, the processor must first align the significands of the operands so that both values share a common exponent before performing the arithmetic operation (Ercegovac, 418).  
-
-This alignment is accomplished by shifting the significand of the operand with the smaller exponent until the exponents match. The magnitude of this shift is determined by the difference between the unbiased exponents of the two operands.
-
-To verify that this shifting mechanism is implemented correctly, this model systematically generates operand pairs such that the difference in their unbiased exponents satisfies one of the following conditions:
-
-[source]
-----
-1) a_exp - b_exp < -(p + 4)
-2) a_exp - b_exp ∈ [-(p + 4), (p + 4)]
-3) a_exp - b_exp > (p + 4)
-----
-
-Where `p` is defined as “the number of significant bits (precision)” (IEEE 754).
-
-These three cases collectively exercise:
-
-* Extreme right shifts (b significantly larger than a)
-* All representable alignment distances within ±(p+4)
-* Extreme left shifts (a significantly larger than b)
-
-By exhausting these regions, the model ensures correct guard, round, and sticky bit behavior across all relevant alignment distances.
+Description: In order to properly execute floating point addition or subtraction, a processor must align the significands of the operands such that both operands share the same exponent value (Ercegovac, 418). In order to test that shifting is performed correctly, this test generates two vectors such that their difference in exponents is: 1) a value smaller than -(p+4) 2) all values in the range [-(p+4), (p+4)], and 3) a value larger than p+4. Where the variable p is defined as “the number of significant bits (precision)”(IEEE 754).
 
 == General Procedure
 
-For each test category, exponent values are generated such that the required inequality on:
-
-[source]
-----
-a_exp - b_exp
-----
-
-is strictly enforced.
-
-The general structure for test generation is as follows:
-
-1. Generate a random exponent `a_exp` within bounds restricted by the desired shift region.
-2. Compute the allowable range for `b_exp` such that the required inequality on `a_exp - b_exp` is satisfied.
-3. Randomly select `b_exp` within its constrained range.
-4. Independently randomize mantissa and sign bits for both operands.
-
-Because exponent fields are bounded by:
-
-[source]
-----
-min_exp ≤ exponent ≤ max_exp
-----
-
-careful restriction of `a_exp` is required to guarantee that a corresponding valid `b_exp` always exists that satisfies the inequality constraint.
-
-For bounded-range testing (i.e., when generating all values in `[−(p+4), (p+4)]`), deterministic incrementing or decrementing of `b_exp` is used to exhaustively enumerate every valid exponent difference.
-
-For extreme-region testing (i.e., values strictly less than `-(p+4)` or strictly greater than `(p+4)`), exponent bounds are tightened such that the inequality is satisfied even in worst-case boundary conditions involving `max_exp` or `min_exp`.
-
-This structured generation guarantees:
-
-* Full coverage of all shift magnitudes relevant to rounding correctness  
-* Proper testing of boundary exponent conditions  
-* Valid IEEE 754 representable exponent values  
+In order to achieve the desired shift amounts between a and b, the difference between a_exp and b_exp needs to be equal to the shift amount specified by each respective test. The following test generation procedures follow the general form of first generating a random value a_exp with restrictions based on the shift amount desired. Then, generating the random b_exp with restrictions based on the shift amount desired. Both mantissa and sign bits are randomized.
 
 == Test Procedure
 
 === Test 1
-*Objective:* A value smaller than `-(p+4)`  
-*Operations:* Add, Subtract  
+Objective: A value smaller than -(p+4)  
+Operations: Add, Subtract
 
 To cover this test, the inequality:
 
@@ -110,329 +53,155 @@ To cover this test, the inequality:
 a_exp - b_exp < -(p + 4)
 ----
 
-must be satisfied.
-
-Given this inequality, we first determine the allowable range for `a_exp`.
-
-The lower bound on `a_exp` must be `min_exp`, because we can always find a value larger than `min_exp` such that the difference satisfies the inequality.
-
-To determine the upper bound of `a_exp`, consider the maximum possible values of both exponents:
+must be satisfied. Given this inequality, the lower bound on a_exp must be min_exp, because we can always find a value larger than min_exp such that their difference is < (p+4). Now, for determining an upper limit of a_exp, we must consider that the largest b_exp and a_exp can be is max_exp. If both a_exp = max_exp and b = max_exp, then their difference = 0. Therefore, we must decrease a_exp by 5 such that:
 
 [source]
 ----
-a_exp = max_exp
-b_exp = max_exp
+(max_exp - 5) - max_exp = -5
 ----
 
-This gives:
+Thus satisfying the inequality at the largest value of a_exp and b_exp. Therefore, the range of a_exp must be:
 
 [source]
 ----
-a_exp - b_exp = 0
+[min_exp, max_exp - (p+5)]
 ----
 
-which does *not* satisfy the inequality.
+Within this test, a_exp is generated as a random value within the range [min_exp, max_exp - (p+5)].
 
-Therefore, we must decrease `a_exp` sufficiently such that even in the extreme case where:
-
-[source]
-----
-b_exp = max_exp
-----
-
-the inequality is still satisfied.
-
-If:
-
-[source]
-----
-a_exp = max_exp - (p + 5)
-----
-
-then:
-
-[source]
-----
-(max_exp - (p + 5)) - max_exp = -(p + 5)
-----
-
-which satisfies:
+With a_exp determined, the value b_exp will become restricted in order to satisfy the inequality:
 
 [source]
 ----
 a_exp - b_exp < -(p + 4)
 ----
 
-Therefore, the valid range for `a_exp` is:
+Understanding this inequality, b_exp’s upper bound must be max_exp. However, b_exp’s lower bound is restricted by how large a_exp is. We can begin by considering the most extreme case where:
 
 [source]
 ----
-a_exp ∈ [min_exp, max_exp - (p + 5)]
+a_exp = max_exp - (p+5)
 ----
 
-Within this range, `a_exp` is randomly generated.
-
----
-
-With `a_exp` determined, we now restrict `b_exp` such that:
-
-[source]
-----
-a_exp - b_exp < -(p + 4)
-----
-
-Rewriting:
-
-[source]
-----
-b_exp > a_exp + (p + 4)
-----
-
-We begin by examining the most extreme case:
-
-[source]
-----
-a_exp = max_exp - (p + 5)
-----
-
-In this case, the only possible value of `b_exp` that satisfies the inequality is:
+If this is the case, the only value of b_exp to satisfy the test is where:
 
 [source]
 ----
 b_exp = max_exp
 ----
 
-More generally, the number of allowable values for `b_exp` is:
+That means that the possible number of values possible for b_exp = the upper bound of a_exp - the value of a_exp. This can be rewritten as:
 
 [source]
 ----
-possible_values = (max_exp - (p + 5)) - a_exp
+possible values of b_exp = (max_exp-(p+5)) - a_exp
 ----
 
-These possible values must be subtracted from `max_exp` to determine the lower bound of `b_exp`.
-
-Thus, the valid range of `b_exp` is:
-
-[source]
-----
-b_exp ∈ [max_exp - possible_values, max_exp]
-----
-
-`b_exp` is then randomly generated within this restricted range.
-
-Both mantissa and sign bits are randomized independently.
+These possible values must be subtracted from max_exp in order to find the lower bound of b_exp. The range of b_exp = [max_exp - possible b_exp values, max_exp]. b_exp is randomly generated as a value within the range [max_exp - possible b_exp values - max_exp].
 
 ---
 
 === Test 2
-*Objective:* All values in the range `[−(p+4), (p+4)]`  
-*Operations:* Add, Subtract  
+Objective: All values within the range [-(p+4), (p+4)]  
+Operations: Add/Subtract
 
 To cover this test:
 
 [source]
 ----
-a_exp - b_exp ∈ [-(p + 4), (p + 4)]
+a_exp - b_exp ∈ [-(p+4), (p+4)]
 ----
 
-This test is divided into two symmetric procedures to exhaustively generate all values in the range.
-
----
-
-==== Part A: Generate values in `[−(p+4), 0]`
-
-We begin by generating:
+In order to satisfy this, we can first look towards generating:
 
 [source]
 ----
-a_exp - b_exp = 0
+a_exp - b_exp = all values in the range [0, -(p+4)]
 ----
 
-This is accomplished by:
+This will be accomplished by starting with a randomly generated value a_exp, setting:
 
 [source]
 ----
 b_exp = a_exp
 ----
 
-We then increment `b_exp` until:
+and then incrementing b_exp by 1 until:
 
 [source]
 ----
-a_exp - b_exp = -(p + 4)
+a_exp - b_exp = -(p+4)
 ----
 
-To ensure we can increment `b_exp` exactly `p + 4` times without exceeding `max_exp`, the upper bound of `a_exp` must be:
+Using this framework, that means that the value a_exp must have an upper limit such that we can increment over it p+4 times. The upper limit must therefore be:
 
 [source]
 ----
-max_exp - (p + 4)
+max_exp - (p+4)
 ----
 
-Since we are not decrementing below `a_exp`, the lower bound remains:
+Because we are not concerned with decrementing below the value a_exp, the lower limit of a_exp is min_exp. a_exp is a random value generated within the range [min_exp, max_exp - (p+4)].
+
+With a_exp determined, we enter a loop to increment b_exp. On the first iteration, b_exp = a_exp and create a test vector based on this value. After generating this test vector, b_exp is incremented. Looping occurs p+5 times to account for the first case where a_exp = b_exp and to allow for a_exp - b_exp = p+4.
+
+Now, tests such that:
 
 [source]
 ----
-min_exp
+a_exp - b_exp = all values in the range [-(p+4), -1]
 ----
 
-Thus:
-
-[source]
-----
-a_exp ∈ [min_exp, max_exp - (p + 4)]
-----
-
-Procedure:
-
-1. Randomly generate `a_exp` in the valid range.
-2. Set `b_exp = a_exp`.
-3. Generate a test vector.
-4. Increment `b_exp`.
-5. Repeat until:
-
-[source]
-----
-a_exp - b_exp = -(p + 4)
-----
-
-The loop executes `p + 5` times to account for the initial equality case.
-
----
-
-==== Part B: Generate values in `[1, (p+4)]`
-
-To generate the negative portion of the range, we reverse the direction.
-
-We begin with:
+must be generated. This can be accomplished by determining a value a_exp, setting:
 
 [source]
 ----
 b_exp = a_exp - 1
 ----
 
-Then decrement `b_exp` until:
+and decrementing the value of b_exp until:
 
 [source]
 ----
-a_exp - b_exp = (p + 4)
+a_exp - b_exp = p+4
 ----
 
-Since `b_exp` will be decremented `p + 4` times, we must ensure that `a_exp` is sufficiently above `min_exp`.
+Because b_exp will be decremented under the value of a_exp, a total of p+4 times, the lower limit of a_exp must be min_exp + p + 4. There is no concern of b_exp or a_exp being incremented, so the upper limit of a_exp is max_exp. a_exp was generated as a random value within the range [min_exp + p + 4, max_exp].
 
-Thus, the lower bound for `a_exp` becomes:
-
-[source]
-----
-min_exp + p + 4
-----
-
-There is no concern of exceeding `max_exp`, so the upper bound is:
-
-[source]
-----
-max_exp
-----
-
-Therefore:
-
-[source]
-----
-a_exp ∈ [min_exp + p + 4, max_exp]
-----
-
-Procedure:
-
-1. Randomly generate `a_exp` in the valid range.
-2. Set `b_exp = a_exp - 1`.
-3. Generate a test vector.
-4. Decrement `b_exp`.
-5. Repeat until:
-
-[source]
-----
-a_exp - b_exp = (p + 4)
-----
-
-The loop executes `p + 4` times.
+With a_exp determined, we enter a loop to decrement b_exp. On the first iteration, b_exp = a_exp - 1 and create a test vector based on this value. Looping occurs p + 4 times to allow for a final value of a_exp - b_exp = p+4.
 
 ---
 
-Both parts together exhaustively generate:
-
-[source]
-----
-a_exp - b_exp ∈ [-(p + 4), (p + 4)]
-----
-
-Mantissa and sign bits are randomized independently for each generated vector.
-
 === Test 3
-*Objective:* A value larger than `p+4`  
-*Operations:* Add, Subtract  
+Objective: A value larger than p+4  
+Operations: Add/Subtract
 
-In order to satisfy this test, the following must be satisfied:
+In order to satisfy this test:
 
 [source]
 ----
 a_exp - b_exp > (p + 4)
 ----
 
-Within this test, the range for `b_exp` is the same as the ranges determined by `a_exp` in Test 1 and the range for `a_exp` is the same as `b_exp` in Test 1.
+Within this test, the range for b_exp is the same as the ranges determined by a_exp in test 1 and the range for a_exp is the same as b_exp in test 1. For simplicity, this test is accomplished with the same logic as test 1. However, when generating the test vectors, b_exp and a_exp are swapped.
 
-For simplicity, this test is accomplished with the same logic as Test 1. However, when generating the test vectors, `b_exp` and `a_exp` are swapped.
-
-== Test Count Breakdown
+== Test count Breakdown
 
 [cols="1,1,1,1,1,1",options="header"]
 |===
-| Precision | p | Test 1 (< -(p+4)) | Test 2 (Range) | Test 3 (> p+4) | Total
+|Precision |p |Test 1 |Test 2 |Test 3 |Total
 
-| BF_16
-| 8
-| 1
-| 25
-| 1
-| 27
-
-| FP_16
-| 11
-| 1
-| 31
-| 1
-| 33
-
-| FP_32
-| 24
-| 1
-| 57
-| 1
-| 59
-
-| FP_64
-| 53
-| 1
-| 115
-| 1
-| 117
-
-| FP_128
-| 113
-| 1
-| 235
-| 1
-| 237
+|BF_16 |8 |1 |25 |1 |27
+|FP_16 |11 |1 |31 |1 |33
+|FP_32 |24 |1 |57 |1 |59
+|FP_64 |53 |1 |115 |1 |117
+|FP_128 |113 |1 |235 |1 |237
 |===
 
-=== Overall Test Count
+Total: 473
 
-[cols="1,1",options="header"]
-|===
-| Description | Value
+(Accounting for Add/Sub)
 
-| Total shift tests
-| 473
-
-| Accounting for Add and Subtract (×2)
-| 946
-|===
+[source]
+----
+473(2) = 946
+----
