@@ -10,13 +10,13 @@ Aharoni et al:
 
 This model tests every possible value for a shift between the input operands. The difference between the unbiased input exponents is:
 
-* A value smaller than -(p+4)
-* All values in the range [-(p+4), (p+4)]
-* A value larger than p+4
+* A value smaller than `-(p+4)`
+* All values in the range `[-(p+4), (p+4)]`
+* A value larger than `p+4`
 
 Number of tests: 1.5 E 3
 
-Precisions supported: BF_16, FP_16, FP_32, FP_64, FP_128
+Precisions supported: `BF_16`, `FP_16`, `FP_32`, `FP_64`, `FP_128`
 
 Operations Supported: Add, Subtract
 
@@ -34,7 +34,16 @@ Operations Supported: Add, Subtract
 
 === Background
 
-Description: In order to properly execute floating point addition or subtraction, a processor must align the significands of the operands such that both operands share the same exponent value (Ercegovac, 418). In order to test that shifting is performed correctly, this test generates two vectors such that their difference in exponents is: 1) a value smaller than -(p+4) 2) all values in the range [-(p+4), (p+4)], and 3) a value larger than p+4. Where the variable p is defined as “the number of significant bits (precision)”(IEEE 754).
+Description: In order to properly execute floating point addition or subtraction, a processor must align the significands of the operands such that both operands share the same exponent value (Ercegovac, 418). In order to test that shifting is performed correctly, this test generates two vectors such that their difference in exponents is:
+
+[source]
+----
+1) a_exp - b_exp < -(p + 4)
+2) a_exp - b_exp ∈ [-(p + 4), (p + 4)]
+3) a_exp - b_exp > (p + 4)
+----
+
+Where the variable `p` is defined as “the number of significant bits (precision)”(IEEE 754).
 
 == General Procedure
 
