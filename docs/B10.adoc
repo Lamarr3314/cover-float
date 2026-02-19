@@ -24,13 +24,13 @@ Operations Supported: Add, Subtract
 
 === Definitions
 
-max_exp = the maximum exponent value based on precision  
-min_exp = the minimum exponent value based on precision  
-a = operand 1  
-b = operand 2  
-b_exp = the value of b's exponent, range is generally restricted to [min_exp, max_exp]  
-a_exp = the value of a's exponent, range is generally restricted to [min_exp, max_exp]  
-p = the number of significant bits in precision
+`max_exp`:: Maximum exponent value based on precision  
+`min_exp`:: Minimum exponent value based on precision  
+`a`:: Operand 1  
+`b`:: Operand 2  
+`a_exp`:: Exponent of operand `a`, generally in `[min_exp, max_exp]`  
+`b_exp`:: Exponent of operand `b`, generally in `[min_exp, max_exp]`  
+`p`:: Number of significant bits (precision)
 
 === Background
 
