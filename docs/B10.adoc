@@ -367,6 +367,21 @@ a_exp - b_exp ∈ [-(p + 4), (p + 4)]
 
 Mantissa and sign bits are randomized independently for each generated vector.
 
+=== Test 3
+*Objective:* A value larger than `p+4`  
+*Operations:* Add, Subtract  
+
+In order to satisfy this test, the following must be satisfied:
+
+[source]
+----
+a_exp - b_exp > (p + 4)
+----
+
+Within this test, the range for `b_exp` is the same as the ranges determined by `a_exp` in Test 1 and the range for `a_exp` is the same as `b_exp` in Test 1.
+
+For simplicity, this test is accomplished with the same logic as Test 1. However, when generating the test vectors, `b_exp` and `a_exp` are swapped.
+
 == Test Count Breakdown
 
 [cols="1,1,1,1,1,1",options="header"]
